@@ -1,18 +1,9 @@
-# \---
-
-# title: my-openenv
-
-# emoji: 🚀
-
-# colorFrom: blue
-
-# colorTo: green
-
-# sdk: docker
-
-# app\_port: 7860
-
-# pinned: false
-
-# \---
-
+---
+title: Email Triage OpenEnv
+emoji: 📧
+colorFrom: blue
+colorTo: green
+sdk: docker
+app_file: app.py
+pinned: false
+---
