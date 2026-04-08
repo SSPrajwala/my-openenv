@@ -1,0 +1,90 @@
+name: email-triage-openenv
+version: "1.0.0"
+description: >
+  A real-world email triage reinforcement learning environment.
+  An AI agent reads incoming emails and must correctly assign priority,
+  category, and routing department for each email.
+  Tasks range from easy (clear spam/urgent) to hard (ambiguous routing, security alerts).
+
+author: SSPrajwala
+tags:
+  - openenv
+  - email-triage
+  - nlp
+  - real-world
+  - rl
+
+tasks:
+  - name: easy_triage
+    description: "Triage 3 clearly distinct emails (spam, urgent technical, billing)."
+    difficulty: easy
+    max_steps: 3
+    reward_range: [0.0, 1.0]
+
+  - name: medium_triage
+    description: "Triage 5 emails with mixed priorities and subtle routing decisions."
+    difficulty: medium
+    max_steps: 5
+    reward_range: [0.0, 1.0]
+
+  - name: hard_triage
+    description: "Triage 8 emails including ambiguous cases, internal urgencies, and security alerts."
+    difficulty: hard
+    max_steps: 8
+    reward_range: [0.0, 1.0]
+
+observation_space:
+  type: object
+  fields:
+    email:
+      type: object
+      fields:
+        id: string
+        subject: string
+        sender: string
+        body: string
+        received_at: string
+        has_attachment: boolean
+    inbox_remaining: integer
+    current_step: integer
+    max_steps: integer
+
+action_space:
+  type: object
+  fields:
+    email_id: string
+    priority:
+      type: enum
+      values: [urgent, high, medium, low]
+    category:
+      type: enum
+      values: [billing, technical, complaint, inquiry, spam, internal]
+    route_to:
+      type: enum
+      values: [finance, engineering, support, sales, hr, trash]
+    summary:
+      type: string
+      min_length: 10
+      max_length: 200
+
+reward:
+  type: float
+  range: [0.0, 1.0]
+  breakdown:
+    priority_correct: 0.35
+    category_correct: 0.30
+    route_correct: 0.25
+    summary_quality: 0.10
+    partial_priority_credit: 0.15
+
+api:
+  reset: POST /reset
+  step: POST /step
+  state: GET /state
+  tasks: GET /tasks
+  health: GET /health
+
+runtime:
+  framework: fastapi
+  python: "3.11"
+  port: 7860
