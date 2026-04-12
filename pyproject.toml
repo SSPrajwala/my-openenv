@@ -1,0 +1,27 @@
+[project]
+name = "email-triage-openenv"
+version = "1.0.0"
+description = "Real-world email triage OpenEnv environment for RL agent training"
+authors = [
+    { name = "SSPrajwala", email = "b23cs137@kitsw.ac.in" }
+]
+requires-python = ">=3.11"
+
+dependencies = [
+    "fastapi==0.111.0",
+    "uvicorn[standard]==0.29.0",
+    "pydantic==2.7.1",
+    "openai>=1.30.1",
+    "pyyaml==6.0.1",
+    "httpx==0.27.0",
+    "requests>=2.31.0",
+    "openenv-core>=0.2.0",
+]
+
+[project.scripts]
+# Start the FastAPI server
+serve = "server.app:main"
+
+[build-system]
+requires      = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
