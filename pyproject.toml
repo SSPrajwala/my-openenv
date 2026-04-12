@@ -19,8 +19,9 @@ dependencies = [
 ]
 
 [project.scripts]
-# Start the FastAPI server
-serve = "server.app:main"
+# Required by openenv validate — must be named "server"
+server = "server.app:main"
+serve  = "server.app:main"
 
 [build-system]
 requires      = ["setuptools", "wheel"]
